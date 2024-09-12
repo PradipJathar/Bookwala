@@ -16,7 +16,7 @@ namespace BookwalaWeb.Controllers
         {
             List<Category> categories = db.Categories.ToList();
 
-            return View();
+            return View(categories);
         }
     }
 }
