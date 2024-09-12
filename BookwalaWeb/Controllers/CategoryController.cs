@@ -27,6 +27,11 @@ namespace BookwalaWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
+            if (category.Name == category.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("Name", "Display Order cannot exactly match the Name.");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);
