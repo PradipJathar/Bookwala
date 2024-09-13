@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace BookwalaWeb.Migrations
+namespace Bookwala.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class AddCategoryTableToDb : Migration

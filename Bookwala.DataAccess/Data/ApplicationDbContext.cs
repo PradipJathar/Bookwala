@@ -1,7 +1,7 @@
-﻿using BookwalaWeb.Models;
+﻿using Bookwala.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookwalaWeb.Data
+namespace Bookwala.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {

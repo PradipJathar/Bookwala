@@ -1,5 +1,5 @@
-﻿using BookwalaWeb.Data;
-using BookwalaWeb.Models;
+﻿using Bookwala.DataAccess.Data;
+using Bookwala.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookwalaWeb.Controllers

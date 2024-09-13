@@ -1,4 +1,4 @@
-using BookwalaWeb.Models;
+using Bookwala.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

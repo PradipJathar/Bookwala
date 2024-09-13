@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bookwala.DataAccess\Bookwala.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

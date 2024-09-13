@@ -1,4 +1,4 @@
-using BookwalaWeb.Data;
+using Bookwala.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
