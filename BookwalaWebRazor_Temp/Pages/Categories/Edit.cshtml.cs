@@ -34,6 +34,8 @@ namespace BookwalaWebRazor_Temp.Pages.Categories
                 db.Categories.Update(Category);
                 db.SaveChanges();
 
+                TempData["success"] = "Category updated successfully.";
+
                 return RedirectToPage("Index");
             }
 

@@ -38,6 +38,8 @@ namespace BookwalaWebRazor_Temp.Pages.Categories
             db.Categories.Remove(category);
             db.SaveChanges();
 
+            TempData["success"] = "Category deleted successfully.";
+
             return RedirectToPage("Index");
         }
     }

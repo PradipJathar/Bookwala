@@ -28,6 +28,8 @@ namespace BookwalaWebRazor_Temp.Pages.Categories
             db.Categories.Add(Category);
             db.SaveChanges();
 
+            TempData["success"] = "Category created successfully.";
+
             return RedirectToPage("Index");
         }
     }
