@@ -14,11 +14,21 @@ namespace BookwalaWebRazor_Temp.Pages.Categories
             db = context;
         }
 
+        [BindProperty]
         public Category Category { get; set; }
 
 
         public void OnGet()
         {
+
+        }
+        
+        public IActionResult OnPost()
+        {
+            db.Categories.Add(Category);
+            db.SaveChanges();
+
+            return RedirectToPage("Index");
         }
     }
 }
