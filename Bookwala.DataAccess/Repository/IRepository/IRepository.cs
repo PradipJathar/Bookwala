@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bookwala.DataAccess.Repository.IRepository
 {
-    internal interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
 
