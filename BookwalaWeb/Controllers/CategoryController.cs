@@ -7,15 +7,15 @@ namespace BookwalaWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _CategoryRepo;
-        public CategoryController(ICategoryRepository categoryRepo)
+        private readonly IUnitOfWork _UnitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _CategoryRepo = categoryRepo;
+            _UnitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            List<Category> categories = _CategoryRepo.GetAll().ToList();
+            List<Category> categories = _UnitOfWork.Category.GetAll().ToList();
 
             return View(categories);
         }
@@ -35,8 +35,8 @@ namespace BookwalaWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _CategoryRepo.Add(category);
-                _CategoryRepo.Save();
+                _UnitOfWork.Category.Add(category);
+                _UnitOfWork.Save();
 
                 TempData["success"] = "Category created successfully.";
 
@@ -53,7 +53,7 @@ namespace BookwalaWeb.Controllers
                 return NotFound();
             }
 
-            Category? category = _CategoryRepo.Get(m => m.Id == id);
+            Category? category = _UnitOfWork.Category.Get(m => m.Id == id);
 
             if (category == null)
             {
@@ -68,8 +68,8 @@ namespace BookwalaWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _CategoryRepo.Update(category);
-                _CategoryRepo.Save();
+                _UnitOfWork.Category.Update(category);
+                _UnitOfWork.Save();
 
                 TempData["success"] = "Category updated successfully.";
 
@@ -86,7 +86,7 @@ namespace BookwalaWeb.Controllers
                 return NotFound();
             }
 
-            Category? category = _CategoryRepo.Get(m => m.Id == id);
+            Category? category = _UnitOfWork.Category.Get(m => m.Id == id);
 
             if (category == null)
             {
@@ -99,15 +99,15 @@ namespace BookwalaWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? category = _CategoryRepo.Get(m => m.Id == id);
+            Category? category = _UnitOfWork.Category.Get(m => m.Id == id);
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            _CategoryRepo.Remove(category);
-            _CategoryRepo.Save();
+            _UnitOfWork.Category.Remove(category);
+            _UnitOfWork.Save();
 
             TempData["success"] = "Category deleted successfully.";
 
