@@ -3,7 +3,7 @@ using Bookwala.DataAccess.Repository.IRepository;
 using Bookwala.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookwalaWeb.Controllers
+namespace BookwalaWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
@@ -20,8 +20,8 @@ namespace BookwalaWeb.Controllers
             return View(categories);
         }
 
-        public IActionResult Create() 
-        { 
+        public IActionResult Create()
+        {
             return View();
         }
 
@@ -45,9 +45,9 @@ namespace BookwalaWeb.Controllers
 
             return View();
         }
-        
-        public IActionResult Edit(int? id) 
-        { 
+
+        public IActionResult Edit(int? id)
+        {
             if (id == null || id == 0)
             {
                 return NotFound();

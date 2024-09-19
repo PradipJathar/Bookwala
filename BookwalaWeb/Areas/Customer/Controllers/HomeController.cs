@@ -2,7 +2,7 @@ using Bookwala.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BookwalaWeb.Controllers
+namespace BookwalaWeb.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {
