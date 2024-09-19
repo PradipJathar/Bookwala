@@ -18,11 +18,6 @@ namespace Bookwala.DataAccess.Repository.IRepository
         }
 
 
-        public void Save()
-        {
-            db.SaveChanges();
-        }
-
         public void Update(Category category)
         {
             db.Categories.Update(category);
