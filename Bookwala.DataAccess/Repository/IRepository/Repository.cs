@@ -28,8 +28,8 @@ namespace Bookwala.DataAccess.Repository.IRepository
 
         public T Get(Func<T, bool> filer)
         {
-            IQueryable<T> query = dbSet;
-            query = (IQueryable<T>)query.Where(filer);
+            IEnumerable<T> query = dbSet;
+            query = query.Where(filer);
             return query.FirstOrDefault();
         }
 
