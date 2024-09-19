@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookwala.DataAccess.Repository.IRepository
 {
-    internal class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext db;
         internal DbSet<T> dbSet;
