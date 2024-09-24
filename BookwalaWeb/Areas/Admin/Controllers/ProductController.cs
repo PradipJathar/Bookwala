@@ -32,7 +32,8 @@ namespace BookwalaWeb.Areas.Admin.Controllers
                 Value = m.Id.ToString()
             });
 
-            ViewBag.Category = categoryList;
+            //ViewBag.CategoryList = categoryList;
+            ViewData["CategoryList"] = categoryList;
 
             return View();
         }
