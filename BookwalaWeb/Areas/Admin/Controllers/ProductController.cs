@@ -69,6 +69,18 @@ namespace BookwalaWeb.Areas.Admin.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"images\product");
 
+                    if (!string.IsNullOrEmpty(productViewModel.Product.ImageUrl))
+                    {
+                        // Delete old image
+
+                        var oldImagePath = Path.Combine(wwwRootPath, productViewModel.Product.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
@@ -77,8 +89,15 @@ namespace BookwalaWeb.Areas.Admin.Controllers
                     productViewModel.Product.ImageUrl = @"\images\product\" + fileName;
                 }
 
+                if (productViewModel.Product.Id == 0)
+                {
+                    _UnitOfWork.Product.Add(productViewModel.Product);
+                }
+                else
+                {
+                    _UnitOfWork.Product.Update(productViewModel.Product);
+                }
 
-                _UnitOfWork.Product.Add(productViewModel.Product);
                 _UnitOfWork.Save();
 
                 TempData["success"] = "Prodcut created successfully.";
