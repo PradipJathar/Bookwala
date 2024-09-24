@@ -1,5 +1,6 @@
 ﻿using Bookwala.DataAccess.Repository.IRepository;
 using Bookwala.Models;
+using Bookwala.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Abstractions;
@@ -32,26 +33,37 @@ namespace BookwalaWeb.Areas.Admin.Controllers
                 Value = m.Id.ToString()
             });
 
-            //ViewBag.CategoryList = categoryList;
-            ViewData["CategoryList"] = categoryList;
+            ProductViewModel productViewModel = new ProductViewModel()
+            {
+                Product = new Product(),
+                CategoryList = categoryList
+            };
 
-            return View();
+            return View(productViewModel);
         }
 
         [HttpPost]
-        public IActionResult Create(Product product) 
+        public IActionResult Create(ProductViewModel productViewModel) 
         {
             if (ModelState.IsValid)
             {
-                _UnitOfWork.Product.Add(product);
+                _UnitOfWork.Product.Add(productViewModel.Product);
                 _UnitOfWork.Save();
 
                 TempData["success"] = "Prodcut created successfully.";
 
                 return RedirectToAction("Index");
             }
+            else
+            {
+                productViewModel.CategoryList = _UnitOfWork.Category.GetAll().Select(m => new SelectListItem
+                {
+                    Text = m.Name,
+                    Value = m.Id.ToString()
+                });
 
-            return View();
+                return View(productViewModel);
+            }
         }
 
 
