@@ -20,18 +20,20 @@ namespace BookwalaWeb.Areas.Admin.Controllers
         {
             List<Product> products = _UnitOfWork.Product.GetAll().ToList();
 
+            return View(products);
+        }
+                
+
+        public IActionResult Create() 
+        {
             IEnumerable<SelectListItem> categoryList = _UnitOfWork.Category.GetAll().Select(m => new SelectListItem
             {
                 Text = m.Name,
                 Value = m.Id.ToString()
             });
 
-            return View(products);
-        }
-                
+            ViewBag.Category = categoryList;
 
-        public IActionResult Create() 
-        { 
             return View();
         }
 
