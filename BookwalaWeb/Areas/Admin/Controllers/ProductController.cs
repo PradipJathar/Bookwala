@@ -1,7 +1,9 @@
 ﻿using Bookwala.DataAccess.Repository.IRepository;
 using Bookwala.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Abstractions;
+using System.Collections.Generic;
 
 namespace BookwalaWeb.Areas.Admin.Controllers
 {
@@ -17,6 +19,12 @@ namespace BookwalaWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> products = _UnitOfWork.Product.GetAll().ToList();
+
+            IEnumerable<SelectListItem> categoryList = _UnitOfWork.Category.GetAll().Select(m => new SelectListItem
+            {
+                Text = m.Name,
+                Value = m.Id.ToString()
+            });
 
             return View(products);
         }
