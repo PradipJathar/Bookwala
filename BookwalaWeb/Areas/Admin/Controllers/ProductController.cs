@@ -10,10 +10,14 @@ namespace BookwalaWeb.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
-        public readonly IUnitOfWork _UnitOfWork;
-        public ProductController(IUnitOfWork unitOfWork)
+        private readonly IUnitOfWork _UnitOfWork;
+
+        private readonly IWebHostEnvironment _WebHostEnvironment;
+
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _UnitOfWork = unitOfWork;
+            _WebHostEnvironment = webHostEnvironment;
         }
 
 
@@ -58,6 +62,22 @@ namespace BookwalaWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _WebHostEnvironment.WebRootPath;
+
+                if(file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    productViewModel.Product.ImageUrl = @"\images\product\" + fileName;
+                }
+
+
                 _UnitOfWork.Product.Add(productViewModel.Product);
                 _UnitOfWork.Save();
 
