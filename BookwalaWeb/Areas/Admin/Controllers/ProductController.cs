@@ -25,7 +25,7 @@ namespace BookwalaWeb.Areas.Admin.Controllers
         }
                 
 
-        public IActionResult Create() 
+        public IActionResult Upsert(int? id) 
         {
             IEnumerable<SelectListItem> categoryList = _UnitOfWork.Category.GetAll().Select(m => new SelectListItem
             {
@@ -39,11 +39,22 @@ namespace BookwalaWeb.Areas.Admin.Controllers
                 CategoryList = categoryList
             };
 
-            return View(productViewModel);
+            if (id == null || id == 0)
+            {
+                // Create
+                return View(productViewModel);
+            }
+            else
+            {
+                // Update
+                productViewModel.Product = _UnitOfWork.Product.Get(m => m.Id == id);
+
+                return View(productViewModel);
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(ProductViewModel productViewModel) 
+        public IActionResult Upsert(ProductViewModel productViewModel, IFormFile? file) 
         {
             if (ModelState.IsValid)
             {
@@ -66,41 +77,7 @@ namespace BookwalaWeb.Areas.Admin.Controllers
             }
         }
 
-
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-            Product? product = _UnitOfWork.Product.Get(m => m.Id == id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                _UnitOfWork.Product.Update(product);
-                _UnitOfWork.Save();
-
-                TempData["success"] = "Product updated successfully.";
-
-                return RedirectToAction("Index");
-            }
-
-            return View();
-        }
-
-
+                
         public IActionResult Delete(int? id) 
         { 
             if(id == null || id == 0)
