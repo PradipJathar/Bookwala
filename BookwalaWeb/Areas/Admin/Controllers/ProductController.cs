@@ -146,7 +146,7 @@ namespace BookwalaWeb.Areas.Admin.Controllers
             _UnitOfWork.Product.Remove(product);
             _UnitOfWork.Save();
 
-            return Json(new { success = true, message = "Delete Successfull." });
+            return Json(new { success = true, message = "Delete successful." });
         }
 
         #endregion
