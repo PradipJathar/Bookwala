@@ -157,5 +157,17 @@ namespace BookwalaWeb.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> products = _UnitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+
+            return Json(new { data = products });
+        }
+
+        #endregion
     }
 }
