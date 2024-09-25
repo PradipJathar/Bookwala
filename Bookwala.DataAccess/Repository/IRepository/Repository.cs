@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Bookwala.DataAccess.Data;
@@ -26,16 +27,35 @@ namespace Bookwala.DataAccess.Repository.IRepository
             dbSet.Add(entity);
         }
 
-        public T Get(Func<T, bool> filer)
+        public T Get(Expression<Func<T, bool>> filer, string? includeProperties = null)
         {
-            IEnumerable<T> query = dbSet;
+            IQueryable<T> query = dbSet;
+
             query = query.Where(filer);
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
             return query.ToList();
         }
 
