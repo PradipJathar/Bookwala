@@ -1,3 +1,4 @@
+using Bookwala.DataAccess.Repository.IRepository;
 using Bookwala.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -6,16 +7,21 @@ namespace BookwalaWeb.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUnitOfWork _UnitOfWork;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUnitOfWork unitOfWork, ILogger<HomeController> logger)
         {
             _logger = logger;
+            _UnitOfWork = unitOfWork;
         }
+
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> products = _UnitOfWork.Product.GetAll(includeProperties: "Category");
+
+            return View(products);
         }
 
         public IActionResult Privacy()
