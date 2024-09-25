@@ -24,6 +24,13 @@ namespace BookwalaWeb.Areas.Customer.Controllers
             return View(products);
         }
 
+        public IActionResult Details(int productId)
+        {
+            Product product = _UnitOfWork.Product.Get(m => m.Id == productId, includeProperties: "Category");
+
+            return View(product);
+        }
+
         public IActionResult Privacy()
         {
             return View();
